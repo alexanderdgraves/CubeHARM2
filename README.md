@@ -1,4 +1,4 @@
-# AVHARM
+# CubeHARM
 
 Cube-HARM is a graphical modelling tool developed on top of previous work by Nhung H. Nguyen et al..
 It enables in-depth threat analysis and defence evaluation of CubeSat systems by combining attack graphs and attack trees with formal security metrics.
