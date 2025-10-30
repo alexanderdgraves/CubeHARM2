@@ -15,7 +15,7 @@ Cube-Harm is built to support Cube Satellite security researchers and developers
 
 ## To use Cube-HARM:
 
-1. Go to the Cube-HARM AttackModel.html site.
+1. Go to the Cube-HARM [AttackModel.html](https://alexanderdgraves.github.io/CubeHARM2/AttackModel.html) site.
 2. Prepare CubeSat architecture in JSON format (see sample files `/scenario`).
 3. Copy the JSON content and paste it into the input field.
 4. Click the `Process Data` button to generate the attack graphs and calculate security metrics automatically.
