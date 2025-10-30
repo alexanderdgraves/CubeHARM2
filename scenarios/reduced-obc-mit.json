@@ -1,0 +1,87 @@
+{
+    "Architecture": {
+        "nodeDataArray": [
+        { "key": "A", "type": "special" },
+
+        { "key": "Space", "isGroup": true, "type": "segment" },
+        { "key": "COM", "group": "Space", "type": "component", "attacksurface": true },
+        { "key": "PAY", "isGroup": true, "group": "Space", "type": "ECU" },
+
+        { "key": "CORE", "group": "Space", "type": "component", "attacksurface": false },
+        { "key": "OBC", "group": "Space", "type": "component", "attacksurface": false },
+
+        { "key": "PCOM", "group": "PAY", "type": "component", "attacksurface": true },
+        { "key": "POBC", "group": "PAY", "type": "component", "attacksurface": false },
+        { "key": "PAYS", "group": "PAY", "type": "component", "attacksurface": false },
+
+        { "key": "Ground", "isGroup": true, "type": "segment" },
+        { "key": "GCOM", "group": "Ground", "type": "component", "attacksurface": true },
+        { "key": "ITENV", "isGroup": true, "group": "Ground", "type": "Logic" },
+        { "key": "GSW", "group": "ITENV", "type": "component", "attacksurface": false },
+        { "key": "COMP", "group": "ITENV", "type": "component", "attacksurface": true },
+
+        { "key": "User", "isGroup": true, "type": "segment" },
+        { "key": "UserENV", "isGroup": true, "group": "User", "type": "Logic" },
+        { "key": "UserDevice", "group": "UserENV", "type": "component", "attacksurface": true },
+        { "key": "Gateway", "group": "UserENV", "type": "component", "attacksurface": true }
+
+],
+
+"linkDataArray": [
+        { "from": "COM", "to": "OBC", "connecttype": "CAN" },
+        { "from": "OBC", "to": "CORE", "connecttype": "CAN" },
+
+        { "from": "PCOM", "to": "POBC", "connecttype": "CAN" },
+        { "from": "OBC", "to": "POBC", "connecttype": "CAN" },
+        { "from": "POBC", "to": "CDHS", "connecttype": "CAN" },
+        { "from": "POBC", "to": "PAYS", "connecttype": "CAN" },
+
+        { "from": "GSW", "to": "GCOM", "connecttype": "Network", "protocol": "TCP/IP" },
+        { "from": "COMP", "to": "GCOM", "connecttype": "Network", "protocol": "TCP/IP" },
+        { "from": "COMP", "to": "GSW", "connecttype": "Network", "protocol": "TCP/IP" },
+
+        { "from": "GCOM", "to": "COM", "connecttype": "RF", "protocol": "CCSDS"},
+        { "from": "COM", "to": "GCOM", "connecttype": "RF", "protocol": "CCSDS"},
+
+        { "from": "UserDevice", "to": "Gateway", "connecttype": "Network" },
+        { "from": "Gateway", "to": "PCOM", "connecttype": "RF" },
+        { "from": "PCOM", "to": "Gateway", "connecttype": "RF" }
+
+]
+},
+
+    "Vulnerability": [
+        { "key": "COM", "figure": "OrGate", "type": "root" },
+        { "key": "v1", "name": "v1", "parent": "COM", "figure": "None", "prob": 0.4, "impact": 0.983,  "type": "vulnerability" },
+        { "key": "v2", "name": "v2", "parent": "COM", "figure": "None", "prob": 0.575, "impact": 0.7, "type": "vulnerability" },
+        { "key": "v3", "name": "v3", "parent": "COM", "figure": "None", "prob": 0.97, "impact": 0.867, "type": "vulnerability" },
+
+        { "key": "GSW", "figure": "OrGate", "type": "root" },
+        { "key": "v4", "name": "v4", "parent": "GSW", "figure": "None", "prob": 0.975, "impact": 0.983, "type": "vulnerability" },
+        { "key": "v5", "name": "v5", "parent": "GSW", "figure": "None", "prob": 0.975, "impact": 0.983, "type": "vulnerability" },
+
+        { "key": "OBC", "figure": "OrGate", "type": "root" },
+        { "key": "OBC_AND", "parent": "OBC", "figure": "AndGate", "type": "gate" },
+        { "key": "OBC_OR", "parent": "OBC_AND", "figure": "OrGate", "type": "gate" },
+        { "key": "v8", "name": "v8", "parent": "OBC", "figure": "None", "prob": 0.975, "impact": 0.65, "type": "vulnerability" },
+        { "key": "v6", "name": "v6", "parent": "OBC_AND", "figure": "None", "prob": 0.5, "impact": 0.983, "type": "vulnerability" },
+        { "key": "v7", "name": "v7", "parent": "OBC_OR", "figure": "None", "prob": 0.975, "impact": 0.6, "type": "vulnerability" },
+        { "key": "v9", "name": "v9", "parent": "OBC_OR", "figure": "None", "prob": 0, "impact": 0, "type": "vulnerability" }
+    ], 
+    
+    "LinkVuln": {
+        "RF": [
+        { "id": "rf_jamming", "name": "Jamming", "risk": 0.414 },
+        { "id": "rf_data_manip", "name": "Data Manipulation", "risk": 0.368 },
+        { "id": "rf_eaves", "name": "Eavesdropping", "risk": 0.414},
+        { "id": "rf_traffic_analysis", "name": "Traffic Analysis", "risk": 0.232 },
+        { "id": "rf_unauth_access", "name": "Unauthorised Access", "risk": 0.6 },
+        { "id": "rf_replay", "name": "Replay Attack", "risk": 0.184 }
+        ],
+        "NETWORK": [
+        { "id": "ddos", "name": "DDoS/DoS", "risk": 0.414 },
+        { "id": "replay", "name": "Replay", "risk": 0.184 },
+        { "id": "ua", "name": "Unuthorised Access", "risk": 0.6 }
+        ]
+    }
+}
